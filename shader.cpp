@@ -73,6 +73,14 @@
         glUniform4f(glGetUniformLocation(id, name), value1, value2, value3, value4);
     }
 
+    void shader::set_uniform_3f(const char* name, float value1, float value2, float value3){
+        glUniform3f(glGetUniformLocation(id, name), value1, value2, value3);
+    }
+
+    void shader::set_uniform_2f(const char* name, float value1, float value2){
+        glUniform2f(glGetUniformLocation(id, name), value1, value2);
+    }
+
     void shader::set_uniform_matrix4(const char* name, matrix4x4& mat4){
         glUniformMatrix4fv(glGetUniformLocation(id, name), 1, false, &mat4.m[0][0]);
     }

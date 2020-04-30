@@ -123,16 +123,16 @@ int main(){
     start = clock();
     printf("started my obj loader: %ld\n", start);
 
-    object my_monkey("monkey3.obj");
-    object my_monkey2("monkey3.obj");
-    object my_monkey3("monkey3.obj");
-    object my_monkey4("monkey3.obj");
-    object my_monkey5("monkey3.obj");
-    object my_monkey6("monkey3.obj");
-    object my_monkey7("monkey3.obj");
-    object my_monkey8("monkey3.obj");
-    object my_monkey9("monkey3.obj");
-    object my_monkey10("monkey3.obj");
+    object my_monkey("Chevy.obj");
+    object my_monkey2("Chevy.obj");
+    object my_Chevy("Chevy.obj");
+    object my_monkey4("Chevy.obj");
+    object my_monkey5("Chevy.obj");
+    object my_monkey6("Chevy.obj");
+    object my_monkey7("Chevy.obj");
+    object my_monkey8("Chevy.obj");
+    object my_monkey9("Chevy.obj");
+    object my_monkey10("Chevy.obj");
 
     end = clock();
     printf("ended my obj loader: %ld\n", end);
@@ -142,16 +142,16 @@ int main(){
     start = clock();
     printf("started his obj loader: %ld\n", start);
 
-    IndexedModel his_monkey = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey2 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey3 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey4 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey5 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey6 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey7 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey8 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey9 = OBJModel("monkey3.obj").ToIndexedModel();
-    IndexedModel his_monkey10 = OBJModel("monkey3.obj").ToIndexedModel();
+    IndexedModel his_monkey = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_Chevy = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
 
     end = clock();
     printf("ended his obj loader: %ld\n", end);
@@ -256,6 +256,9 @@ int main(){
 //
 //    stbi_image_free(image);
 
+    shader light_object_shader(vertex_shader, light_fragment_shader);
+    light_object_shader.use();
+    light_object_shader.set_uniform_4f("light_color", 1.f, 1.f, 1.f, 1.f);
     shader basic_shader(vertex_shader, fragment_shader);
     basic_shader.use();
     //glViewport(0, 0, 640, 480);
@@ -344,25 +347,31 @@ int main(){
         }
 
         transform.set_translation(0, 0, 0);
-        transform.set_rotation(0,0,0);
+        transform.set_rotation(0,90,0);
         matrix4x4 proj = transform.get_projected_transformation();
-
-        basic_shader.set_uniform_4f("rand_color", (float)(rand() % 255 + 1)/255, (float)(rand() % 255 + 1)/255, (float)(rand() % 255 + 1)/255, 1.0f);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        my_monkey.draw(basic_shader);
+        light_object_shader.use();
+        light_object_shader.set_uniform_matrix4("u_mvp", proj);
+        my_monkey.draw(light_object_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
-        basic_shader.set_uniform_matrix4("u_mvp", proj);
 
-        transform.set_translation(3, 0, 0);
+        transform.set_translation(5, 0, 0);
         transform.set_rotation(0,180,0);
+        transform.get_projected_transformation();
         proj = transform.get_projected_transformation();
+        matrix4x4 translation = transform.get_transformation();
 
+        basic_shader.use();
+//        basic_shader.set_uniform_4f("rand_color", (float)(rand() % 255 + 1)/255, (float)(rand() % 255 + 1)/255, (float)(rand() % 255 + 1)/255, 1.0f);
+        basic_shader.set_uniform_4f("light_color", 1.f, 1.f, 1.f, 1.f);
+        basic_shader.set_uniform_4f("object_color", 1.f, 0.5f, 1.f, 1.f);
+        basic_shader.set_uniform_matrix4("model", translation);
+        basic_shader.set_uniform_3f("light_pos", 0.f, 0.f, 0.f);
+        basic_shader.set_uniform_matrix4("u_mvp", proj);
         my_monkey.draw(basic_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
-        basic_shader.set_uniform_matrix4("u_mvp", proj);
-
         context->swap_buffers();
     }
 

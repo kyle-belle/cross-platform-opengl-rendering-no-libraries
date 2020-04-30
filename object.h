@@ -52,7 +52,7 @@ class obj_parse_helper{
             unsigned int i;
             for(i = start_value_index; i < end_value_index; i++){
 
-                if(face_value[i] == '/' || i == end_value_index - 1){
+                if(face_value[i] == '/' || i == (end_value_index - 1)){
 //
                     value_seperator = i;
                     memcpy(face_vert[index], &face_value[start_value_index], value_seperator);
@@ -75,7 +75,7 @@ class obj_parse_helper{
             if(has_uvs){
 
                 for(i = start_value_index; i < end_value_index; i++){
-                    if(face_value[i] == '/' || i == end_value_index - 1){
+                    if(face_value[i] == '/' || i == (end_value_index - 1)){
 //                                    printf("uv i: %d\n", i);
                         value_seperator = i;
                         memcpy(face_uv[index], &face_value[start_value_index], value_seperator);
@@ -105,7 +105,9 @@ class obj_parse_helper{
                         face_norm[index][value_seperator] = '\0';
 
                         temp_obj_index.normal_index = atoi(face_norm[index]) - 1;
-                        //printf("face_norm: %d\n", atoi(face_norm[index]));
+//                        if(temp_obj_index.normal_index > 13710){
+//                            printf("face_norm: %d, %s\n", temp_obj_index.normal_index, face_norm);
+//                        }
                     }
                 }
             }
@@ -115,7 +117,7 @@ class obj_parse_helper{
             unsigned int i;
             start_value_index = 0;
             start_line_index = 0;
-            //end_line_index = length;
+//            end_line_index = face_length;
 
             for(i = start_line_index; i < face_length; i++){
                 if(face[i] == ' '){
@@ -294,6 +296,7 @@ class obj_parse_helper{
                         end_line_index = i;
                         break;
                     }
+                    end_line_index = i;
                 }
 
                 if(end_line_index <= face_length){

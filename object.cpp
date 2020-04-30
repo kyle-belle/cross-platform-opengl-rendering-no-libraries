@@ -505,8 +505,10 @@ void object::create_object(){
             this->tex_coords.emplace_back(this->obj_tex_coords[this->obj_indices[i].tex_coord_index]);
         }
 
+//        printf("before normal %d, normals_size:%d, obj_indices_size:%d\n", this->obj_indices[i].normal_index, this->obj_normals.size(), this->obj_indices.size());
         if(this->has_normals){
-            this->normals.emplace_back(this->obj_normals[this->obj_indices[i].normal_index]);
+//            printf("normal #%d\tx: %f, y: %f, z: %f\n", i, this->obj_normals[this->obj_indices[i].normal_index].x, this->obj_normals[this->obj_indices[i].normal_index].y, this->obj_normals[this->obj_indices[i].normal_index].z);
+            this->normals.emplace_back(vector3f(this->obj_normals[this->obj_indices[i].normal_index]));
         }
 
         this->indices.push_back(i);
