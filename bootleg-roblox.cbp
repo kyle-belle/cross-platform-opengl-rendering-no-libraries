@@ -86,6 +86,8 @@
 		<Unit filename="texture.h" />
 		<Unit filename="transform.cpp" />
 		<Unit filename="transform.h" />
+		<Unit filename="utils.cpp" />
+		<Unit filename="utils.h" />
 		<Unit filename="vector2f.h" />
 		<Unit filename="vector3f.h" />
 		<Unit filename="vector4f.h" />

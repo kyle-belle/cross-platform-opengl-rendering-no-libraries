@@ -2,7 +2,8 @@
 #include "object.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <algorithm>
+#include "utils.h"
 //unsigned int object::VAO;
 
 object::object(const char* file){
@@ -62,7 +63,7 @@ object::object(const char* file){
                             //fgets(face, 62, obj_file);
                             //face[63] = '\0';
                             //printf("v: %s", face);
-                            fscanf(obj_file, "%f%f%f", &vert.x, &vert.y, &vert.z);
+                            fscanf(obj_file, "%f %f %f", &vert.x, &vert.y, &vert.z);
 //                            printf("Vs1 %f, %f, %f\n", vert.x, vert.y, vert.z);
                             this->obj_vertices.emplace_back(vector3f(vert.x, vert.y, vert.z));
                             //printf("fuck you: %c", fgetc(obj_file));
@@ -71,7 +72,7 @@ object::object(const char* file){
 
                         case 'n':
 
-                            fscanf(obj_file, "%f%f%f", &norm.x, &norm.y, &norm.z);
+                            fscanf(obj_file, "%f %f %f", &norm.x, &norm.y, &norm.z);
                             this->obj_normals.emplace_back(vector3f(norm.x, norm.y, norm.z));
                             //printf("fuck you: %c", fgetc(obj_file));
                             fgetc(obj_file);
@@ -79,11 +80,14 @@ object::object(const char* file){
 
                         case 't':
 
-                            fscanf(obj_file, "%f%f", &tex_.x, &tex_.y);
+                            fscanf(obj_file, "%f %f", &tex_.x, &tex_.y);
                             this->obj_tex_coords.emplace_back(vector2f(tex_.x, tex_.y));
                             //printf("fuck you: %c", fgetc(obj_file));
                             fgetc(obj_file);
                         break;
+
+                        default:
+                            printf("something not right\n");
 
                     }
                 break;
@@ -98,10 +102,13 @@ object::object(const char* file){
 
                     //printf("face:%s\n", face);
 
+                    r_trim(r_trim(r_trim(face, '\r'), '\n'));
                     index_length = strlen(face);
 //                    printf("strlen(face): %d\n", index_length);
+//                    printf("face: %s\n", face);
 
-                    face_parser.parse_face(face, index_length, this->obj_indices, this->has_uvs, this->has_normals);
+                    face_parser.parse_face(/*r_trim(*/face/*)*/, index_length, this->obj_indices, this->has_uvs, this->has_normals);
+                    fgetc(obj_file);
 //
 //                    start = 0;
 //                    end = 0;
@@ -355,7 +362,6 @@ object::object(const char* file){
 ////                    indices.emplace_back(i);
 ////                    indices.emplace_back(j);
 ////                    indices.emplace_back(k);
-                        fgetc(obj_file);
 //                        printf("fgetc(obj_file) case: 'f': %c\n", fgetc(obj_file));
                 break;
 
@@ -376,6 +382,7 @@ object::object(const char* file){
 //    printf("sizeof(vertices) %d\n", this->obj_vertices.size());
 //    printf("sizeof(tex_coords) %d\n", this->obj_tex_coords.size());
 //    printf("sizeof(normals) %d\n", this->obj_normals.size());
+    indice_size = this->indices.size();
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -418,6 +425,7 @@ object::object(float* vertices, unsigned int vert_size, unsigned int* indices, u
         //this->vertices = std::vector<vector3f>(vertices, vertices + vert_size);
 
         this->indices = std::vector<unsigned int>(indices, indices + ind_size);
+        indice_size = this->indices.size();
 
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
@@ -461,10 +469,12 @@ object::object(float* vertices, unsigned int vert_size, float* tex_coords, unsig
 
         this->indices = std::vector<unsigned int>(indices, indices + ind_size/4);
 
+        indice_size = this->indices.size();
 
-        printf("sizeof(indices) %d\n", this->indices.size());
-        printf("sizeof(indices) %d\n", this->obj_indices.size());
-        printf("sizeof(indices) %d\n", this->obj_vertices.size());
+
+        printf("sizeof(indices) %lu\n", this->indices.size());
+        printf("sizeof(obj indices) %lu\n", this->obj_indices.size());
+        printf("sizeof(vertices) %lu\n", this->obj_vertices.size());
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
@@ -499,17 +509,23 @@ void object::create_object(){
 
 //        printf("obj vert: %f\n ", this->obj_vertices[this->obj_indices[i].vertex_index].x);
 //        printf("index %d\n", this->obj_indices[i].vertex_index);
-        this->vertices.emplace_back(vector3f(this->obj_vertices[this->obj_indices[i].vertex_index]));
+//        printf("before vert %u, vert_size:%d, obj_indices_size:%d\n", this->obj_indices[i].vertex_index, this->obj_vertices.size(), this->obj_indices.size());
 
+//        if(std::find(this->obj_indices.begin(), this->obj_indices.end(), this->obj_indices[i]) == this->obj_indices.end()){
+
+        this->vertices.emplace_back(this->obj_vertices[this->obj_indices[i].vertex_index]);
+
+//        printf("before tex %u, tex_size:%d, obj_indices_size:%d\n", this->obj_indices[i].tex_coord_index, this->obj_tex_coords.size(), this->obj_indices.size());
         if(this->has_uvs){
+//            printf("tex #%d\tx: %f, y: %f, z: %f\n", i, this->obj_tex_coords[this->obj_indices[i].tex_coord_index].x, this->obj_tex_coords[this->obj_indices[i].tex_coord_index].y);
             this->tex_coords.emplace_back(this->obj_tex_coords[this->obj_indices[i].tex_coord_index]);
         }
 
-//        printf("before normal %d, normals_size:%d, obj_indices_size:%d\n", this->obj_indices[i].normal_index, this->obj_normals.size(), this->obj_indices.size());
         if(this->has_normals){
-//            printf("normal #%d\tx: %f, y: %f, z: %f\n", i, this->obj_normals[this->obj_indices[i].normal_index].x, this->obj_normals[this->obj_indices[i].normal_index].y, this->obj_normals[this->obj_indices[i].normal_index].z);
-            this->normals.emplace_back(vector3f(this->obj_normals[this->obj_indices[i].normal_index]));
+            this->normals.emplace_back(this->obj_normals[this->obj_indices[i].normal_index]);
         }
+
+//        }
 
         this->indices.push_back(i);
     }
@@ -519,5 +535,5 @@ void object::draw(shader& shader){
 
     shader.bind();
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indice_size, UNSIGNED_INT, 0);
 }
