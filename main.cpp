@@ -14,6 +14,7 @@
 #include "texture.h"
 #include "stb_image.h"
 #include "keyboard.h"
+#include "utils.h"
 
 //using namespace std;
 float transformation::zNEAR = 0.1f;
@@ -32,6 +33,18 @@ int main(){
 
 //    __asm__("movl %edx, %eax\n\t"
 //            "addl $2, %eax\n\t");
+
+//    char a1[] = "      kacdajajsadd";
+//    char a2[] = "      k acdajajsadd               ";
+//    char a3[] = "      k acdajajsa d   d";
+//    char a4[] = "kacd ajajsadd     ";
+//    char a5[] = "k acdaj ajsad d";
+//
+//    printf("original: %s, trim: %s, r_trim: %s, l_trim: %s\n\n", a1, trim(a1), r_trim(a1), l_trim(a1));
+//    printf("original: %s, trim: %s, r_trim: %s, l_trim: %s\n\n", a2, trim(a2), r_trim(a2), l_trim(a2));
+//    printf("original: %s, trim: %s, r_trim: %s, l_trim: %s\n\n", a3, trim(a3), r_trim(a3), l_trim(a3));
+//    printf("original: %s, trim: %s, r_trim: %s, l_trim: %s\n\n", a4, trim(a4), r_trim(a4), l_trim(a4));
+//    printf("original: %s, trim: %s, r_trim: %s, l_trim: %s\n\n", a5, trim(a5), r_trim(a5), l_trim(a5));
 
     printf("Hello world!\n");
     gl_context_init();
@@ -158,10 +171,22 @@ int main(){
 
     printf("total time to complete 10 of his obj loader: %.2fsec\n", (double)(end - start)/CLOCKS_PER_SEC);
 
+//    my_monkey.buffer_data(his_monkey);
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //    glEnable(GL_BLEND);
 
-
+    if(my_monkey.indices.size() != his_monkey.indices.size()){
+        printf("different size indices: mine(%lu), his(%lu)\n", my_monkey.indices.size(), his_monkey.indices.size());
+    }
+    if(my_monkey.vertices.size() != his_monkey.positions.size()){
+        printf("different size vertices: mine(%lu), his(%lu)\n", my_monkey.vertices.size(), his_monkey.positions.size());
+    }
+    if(my_monkey.tex_coords.size() != his_monkey.texCoords.size()){
+        printf("different size tex_coords: mine(%lu), his(%lu)\n", my_monkey.tex_coords.size(), his_monkey.texCoords.size());
+    }
+    if(my_monkey.normals.size() != his_monkey.normals.size()){
+        printf("different size normals: mine(%lu), his(%lu)\n", my_monkey.normals.size(), his_monkey.normals.size());
+    }
 
     // creating and binding a vertex array object
 //    glGenVertexArrays(1, &VAO);
@@ -357,7 +382,7 @@ int main(){
         my_monkey.draw(light_object_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
 
-        transform.set_translation(5, 0, 0);
+        transform.set_translation(15, 0, 0);
         transform.set_rotation(0,180,0);
         transform.get_projected_transformation();
         proj = transform.get_projected_transformation();
