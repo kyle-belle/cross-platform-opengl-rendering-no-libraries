@@ -54,7 +54,7 @@ int main(){
     printf("Hello world!\n");
     gl_context_init();
     gl_context* context = gl_context::get_window_instance();
-    context->init(3,3);
+    context->init(2,1);
 
     context->create_window(640, 480, "bootleg roblox");
 
@@ -69,68 +69,68 @@ int main(){
     printf("opengl version %s\n", glGetString(GL_VERSION));
 
     // Triangle vertices
-//    float vertices[24] = {  -0.5f, -0.5f,  0.5f,
-//                             0.5f, -0.5f,  0.5f,
-//                             0.5f,  0.5f,  0.5f,
-//                            -0.5f,  0.5f,  0.5f,
-//                            // back
-//                            -0.5f, -0.5f, -0.5f,
-//                             0.5f, -0.5f, -0.5f,
-//                             0.5f,  0.5f, -0.5f,
-//                            -0.5f,  0.5f, -0.5f };
+    float vertices[24] = {  -0.5f, -0.5f,  0.5f,
+                             0.5f, -0.5f,  0.5f,
+                             0.5f,  0.5f,  0.5f,
+                            -0.5f,  0.5f,  0.5f,
+                            // back
+                            -0.5f, -0.5f, -0.5f,
+                             0.5f, -0.5f, -0.5f,
+                             0.5f,  0.5f, -0.5f,
+                            -0.5f,  0.5f, -0.5f };
 
-//    float tex_coords[48] = { 0.0f, 0.0f,
-//                             1.0f, 0.0f,
-//                             1.0f, 1.0f,
-//                             0.0f, 1.0f,
-//                             0.0f, 0.0f,
-//                             1.0f, 0.0f,
-//                             1.0f, 1.0f,
-//                             0.0f, 1.0f,
-//                             0.0f, 0.0f,
-//                             1.0f, 0.0f,
-//                             1.0f, 1.0f,
-//                             0.0f, 1.0f,
-//                             0.0f, 0.0f,
-//                             1.0f, 0.0f,
-//                             1.0f, 1.0f,
-//                             0.0f, 1.0f,
-//                             0.0f, 0.0f,
-//                             1.0f, 0.0f,
-//                             1.0f, 1.0f,
-//                             0.0f, 1.0f,
-//                             0.0f, 0.0f,
-//                             1.0f, 0.0f,
-//                             1.0f, 1.0f,
-//                             0.0f, 1.0f  };
+    float tex_coords[48] = { 0.0f, 0.0f,
+                             1.0f, 0.0f,
+                             1.0f, 1.0f,
+                             0.0f, 1.0f,
+                             0.0f, 0.0f,
+                             1.0f, 0.0f,
+                             1.0f, 1.0f,
+                             0.0f, 1.0f,
+                             0.0f, 0.0f,
+                             1.0f, 0.0f,
+                             1.0f, 1.0f,
+                             0.0f, 1.0f,
+                             0.0f, 0.0f,
+                             1.0f, 0.0f,
+                             1.0f, 1.0f,
+                             0.0f, 1.0f,
+                             0.0f, 0.0f,
+                             1.0f, 0.0f,
+                             1.0f, 1.0f,
+                             0.0f, 1.0f,
+                             0.0f, 0.0f,
+                             1.0f, 0.0f,
+                             1.0f, 1.0f,
+                             0.0f, 1.0f  };
 
-//    unsigned int indices[36] = { // front
-//                                    0, 1, 2,
-//                                    2, 3, 0,
-//                                    // right
-//                                    1, 5, 6,
-//                                    6, 2, 1,
-//                                    // back
-//                                    7, 6, 5,
-//                                    5, 4, 7,
-//                                    // left
-//                                    4, 0, 3,
-//                                    3, 7, 4,
-//                                    // bottom
-//                                    4, 5, 1,
-//                                    1, 0, 4,
-//                                    // top
-//                                    3, 2, 6,
-//                                    6, 7, 3 };
-//
-//    printf("%d\n", sizeof(indices));
+    unsigned int indices[36] = { // front
+                                    0, 1, 2,
+                                    2, 3, 0,
+                                    // right
+                                    1, 5, 6,
+                                    6, 2, 1,
+                                    // back
+                                    7, 6, 5,
+                                    5, 4, 7,
+                                    // left
+                                    4, 0, 3,
+                                    3, 7, 4,
+                                    // bottom
+                                    4, 5, 1,
+                                    1, 0, 4,
+                                    // top
+                                    3, 2, 6,
+                                    6, 7, 3 };
 
-//    unsigned int VAO;
-//    unsigned int VBO;
-//    unsigned int IBO;
-//    unsigned int TBO;
+    printf("%d\n", sizeof(indices));
 
-//    object cube(vertices, sizeof(vertices), tex_coords, sizeof(tex_coords), indices, sizeof(indices));
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int IBO;
+    unsigned int TBO;
+
+    object cube(vertices, sizeof(vertices), tex_coords, sizeof(tex_coords), indices, sizeof(indices));
 
 //    Sleep(2000);
 
@@ -141,16 +141,16 @@ int main(){
     start = clock();
     printf("started my obj loader: %ld\n", start);
 
-    object my_monkey("Chevy.obj");
-    object my_monkey2("Chevy.obj");
-    object my_Chevy("Chevy.obj");
-    object my_monkey4("Chevy.obj");
-    object my_monkey5("Chevy.obj");
-    object my_monkey6("Chevy.obj");
-    object my_monkey7("Chevy.obj");
-    object my_monkey8("Chevy.obj");
-    object my_monkey9("Chevy.obj");
-    object my_monkey10("Chevy.obj");
+    object my_monkey("./Chevy.obj");
+    object my_monkey2("./Chevy.obj");
+    object my_Chevy("./Chevy.obj");
+    object my_monkey4("./Chevy.obj");
+    object my_monkey5("./Chevy.obj");
+    object my_monkey6("./Chevy.obj");
+    object my_monkey7("./Chevy.obj");
+    object my_monkey8("./Chevy.obj");
+    object my_monkey9("./Chevy.obj");
+    object my_monkey10("./Chevy.obj");
 
     end = clock();
     printf("ended my obj loader: %ld\n", end);
@@ -160,16 +160,16 @@ int main(){
     start = clock();
     printf("started his obj loader: %ld\n", start);
 
-    IndexedModel his_monkey = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_Chevy = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey2 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_Chevy = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey4 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey5 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey6 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey7 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey8 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey9 = OBJModel("./Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey10 = OBJModel("./Chevy.obj").ToIndexedModel();
 
     end = clock();
     printf("ended his obj loader: %ld\n", end);
@@ -194,31 +194,31 @@ int main(){
     }
 
     // creating and binding a vertex array object
-//    glGenVertexArrays(1, &VAO);
-//    glBindVertexArray(VAO);
-//
-//    //unsigned int VBO;
-//    // creating and binding a vertex buffer object(VBO)
-//    glGenBuffers(1, &VBO);
-//    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-//
-//    // specifying the attributes(details) of the vertex buffer object(VBO) we just binded (must be bound) also enabling it
-//    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3*sizeof(float), (void*)0);
-//    glEnableVertexAttribArray(0);
-//
-//    // creating and binding a index buffer object(IBO)
-//    glGenBuffers(1, &IBO);
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-//
-//    //generating texture-coordinates buffer object(TBO)
-//    glGenBuffers(1, &TBO);
-//    glBindBuffer(GL_ARRAY_BUFFER, TBO);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords), tex_coords, GL_STATIC_DRAW);
-//
-//    glVertexAttribPointer(2, 2, GL_FLOAT, false, 2*sizeof(float), (void*)0);
-//    glEnableVertexAttribArray(2);
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    //unsigned int VBO;
+    // creating and binding a vertex buffer object(VBO)
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    // specifying the attributes(details) of the vertex buffer object(VBO) we just binded (must be bound) also enabling it
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // creating and binding a index buffer object(IBO)
+    glGenBuffers(1, &IBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    //generating texture-coordinates buffer object(TBO)
+    glGenBuffers(1, &TBO);
+    glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords), tex_coords, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, false, 2*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(2);
 
     /// setting texture attributes
 
@@ -385,7 +385,7 @@ int main(){
         light_object_shader.use();
         light_object_shader.set_uniform_matrix4("u_mvp", proj);
         my_monkey.draw(light_object_shader);
-//        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
 
         transform.set_translation(15, 0, 0);
         transform.set_rotation(0,180,0);
@@ -401,7 +401,7 @@ int main(){
         basic_shader.set_uniform_3f("light_pos", 0.f, 0.f, 0.f);
         basic_shader.set_uniform_matrix4("u_mvp", proj);
         my_monkey.draw(basic_shader);
-//        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
         context->swap_buffers();
     }
 
