@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_H_INCLUDED
 #define KEYBOARD_H_INCLUDED
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
     #include "Platform/Linux/keyboard.h"
 #endif // __linux__
 
