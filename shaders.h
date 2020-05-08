@@ -7,7 +7,7 @@
 //#define OBJECT_INDEX_BUFFER 3
 
 
-static const char* vertex_shader = "#version 330\n"
+static const char* vertex_shader = "#version 210\n"
                      "layout (location = 0) in vec3 vertices;\n"
                      "layout (location = 1) in vec3 normals;\n"
                      "layout (location = 2) in vec2 tex_coords;\n"
@@ -28,7 +28,7 @@ static const char* vertex_shader = "#version 330\n"
                      "  }";
 
 
-static const char* fragment_shader = "#version 330\n"
+static const char* fragment_shader = "#version 210\n"
                                      "out vec4 color;\n"
 
                                      "uniform vec4 rand_color;\n"
@@ -53,7 +53,7 @@ static const char* fragment_shader = "#version 330\n"
                                      "      color = vec4(result, 1.0);\n"
                                      "  }";
 
-static const char* light_fragment_shader = "#version 330\n"
+static const char* light_fragment_shader = "#version 210\n"
                                      "out vec4 color;\n"
 
                                      "uniform vec4 light_color;\n"

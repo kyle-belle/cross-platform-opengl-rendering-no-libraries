@@ -1,14 +1,18 @@
 #ifndef GL_WINDOW_H_INCLUDED
 #define GL_WINDOW_H_INCLUDED
-
-#include "GL/glew.h"
-#include <GL/gl.h>
+#if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+#endif
+#include "../GL/glew.h"
 
 #ifdef _WIN32
     #include "../Platform/Windows/Window/gl_window.h"
 #endif // _WIN32
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
     #include "../Platform/Linux/Window/gl_window.h"
 #endif // __linux__
 
