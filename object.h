@@ -35,11 +35,11 @@ class obj_index{
 class obj_parse_helper{
     public:
 
-        char face_line[64];
-        char face_value[16];
-        char face_vert[4][8];
-        char face_uv[4][8];
-        char face_norm[4][8];
+        char face_line[128];
+        char face_value[64];
+        char face_vert[4][16];
+        char face_uv[4][16];
+        char face_norm[4][16];
 
         obj_index temp_obj_index;
 

@@ -138,7 +138,7 @@ int main(){
 
     object my_monkey("Chevy.obj");
     object my_monkey2("Chevy.obj");
-    object my_Chevy("Chevy.obj");
+    object my_lamborghiniaventador("Chevy.obj");
     object my_monkey4("Chevy.obj");
     object my_monkey5("Chevy.obj");
     object my_monkey6("Chevy.obj");
@@ -156,15 +156,15 @@ int main(){
     printf("started his obj loader: %ld\n", start);
 
     IndexedModel his_monkey = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_Chevy = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_lamborghiniaventador = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
 
     end = clock();
     printf("ended his obj loader: %ld\n", end);

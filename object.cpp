@@ -15,7 +15,7 @@ object::object(const char* file){
 //    char vert_index[8];
 //    char uv_index[8];
 //    char norm_index[8];
-    char face[64];
+    char face[128];
     unsigned int index_length;
 
 //    bool has_uvs = false, has_normals = false;
@@ -102,7 +102,7 @@ object::object(const char* file){
 
                     //printf("face:%s\n", face);
 
-                    r_trim(r_trim(r_trim(face, '\r'), '\n'));
+                    r_trim(r_trim(r_trim(face, '\n'), '\r'));
                     index_length = strlen(face);
 //                    printf("strlen(face): %d\n", index_length);
 //                    printf("face: %s\n", face);
@@ -503,7 +503,7 @@ object::object(float* vertices, unsigned int vert_size, float* tex_coords, unsig
 void object::create_object(){
 
 //    obj_index current_index;
-
+//    unsigned int current = 0;
     for(unsigned int i = 0; i < this->obj_indices.size(); i++){
 //        current_index = obj_indices[i];
 
@@ -513,21 +513,37 @@ void object::create_object(){
 
 //        if(std::find(this->obj_indices.begin(), this->obj_indices.end(), this->obj_indices[i]) == this->obj_indices.end()){
 
-        this->vertices.emplace_back(this->obj_vertices[this->obj_indices[i].vertex_index]);
+//        int previous_index = -1;
+//        for (unsigned int j = 0; j < i; j++){
+//            if (obj_indices[i] == obj_indices[j]){
+//                printf("i = %u/%u/%u, j = %u/%u/%u\n", i - j, j, obj_indices[i].normal_index, obj_indices[j].vertex_index, obj_indices[j].tex_coord_index, obj_indices[j].normal_index);
+//                previous_index = j;
+//                break;
+//            }
+//        }
+//
+//        if(previous_index > -1){
+//            indices.push_back(indices[previous_index]);
+//        }else{
 
-//        printf("before tex %u, tex_size:%d, obj_indices_size:%d\n", this->obj_indices[i].tex_coord_index, this->obj_tex_coords.size(), this->obj_indices.size());
-        if(this->has_uvs){
-//            printf("tex #%d\tx: %f, y: %f, z: %f\n", i, this->obj_tex_coords[this->obj_indices[i].tex_coord_index].x, this->obj_tex_coords[this->obj_indices[i].tex_coord_index].y);
-            this->tex_coords.emplace_back(this->obj_tex_coords[this->obj_indices[i].tex_coord_index]);
-        }
+            this->vertices.emplace_back(this->obj_vertices[this->obj_indices[i].vertex_index]);
 
-        if(this->has_normals){
-            this->normals.emplace_back(this->obj_normals[this->obj_indices[i].normal_index]);
-        }
+    //        printf("before tex %u, tex_size:%d, obj_indices_size:%d\n", this->obj_indices[i].tex_coord_index, this->obj_tex_coords.size(), this->obj_indices.size());
+            if(this->has_uvs){
+    //            printf("tex #%d\tx: %f, y: %f, z: %f\n", i, this->obj_tex_coords[this->obj_indices[i].tex_coord_index].x, this->obj_tex_coords[this->obj_indices[i].tex_coord_index].y);
+                this->tex_coords.emplace_back(this->obj_tex_coords[this->obj_indices[i].tex_coord_index]);
+            }
 
+            if(this->has_normals){
+                this->normals.emplace_back(this->obj_normals[this->obj_indices[i].normal_index]);
+            }
+
+            this->indices.push_back(i);
+
+//            current++;
+//        }
 //        }
 
-        this->indices.push_back(i);
     }
 }
 
