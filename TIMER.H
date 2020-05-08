@@ -8,6 +8,7 @@ class TIME{
 public:
 
    static std::chrono::duration<double, std::milli> delta;
+   static std::chrono::duration<double, std::milli> last_tick;
    static std::chrono::duration<double, std::milli> time;
 
 };

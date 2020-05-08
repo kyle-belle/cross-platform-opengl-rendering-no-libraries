@@ -32,26 +32,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
-			<Add option="-fexceptions" />
-			<Add option="-framework OpenGL" />
-			<Add option="-framework Cocoa" />
-			<Add option="-DGLEW_STATIC" />
 			<Add directory="/opt/X11/include" />
 		</Compiler>
 		<Linker>
-			<Add library="/opt/X11/lib/libX11.6.dylib" />
-			<Add library="/opt/X11/lib/libGL.1.dylib" />
-			<Add library="/opt/X11/lib/libglapi.0.dylib" />
-			<Add library="/opt/X11/lib/libglapi.0.dylib" />
-			<Add library="/opt/X11/lib/libGLESv1_CM.1.dylib" />
-			<Add library="/opt/X11/lib/libGLESv1_CM.1.dylib" />
-			<Add library="/opt/X11/lib/libGLESv2.2.dylib" />
-			<Add library="/opt/X11/lib/libGLESv2.2.dylib" />
-			<Add library="/opt/X11/lib/libGLU.1.dylib" />
-			<Add library="/opt/X11/lib/libGLU.1.dylib" />
-			<Add library="/opt/X11/lib/libglut.3.dylib" />
-			<Add library="/opt/X11/lib/libglut.3.dylib" />
-			<Add library="/opt/X11/lib/libxcb-glx.0.dylib" />
+			<Add library="GL" />
+			<Add library="X11" />
 		</Linker>
 		<Unit filename="Event/event.h" />
 		<Unit filename="Event/key_event.h" />

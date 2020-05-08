@@ -9,6 +9,8 @@
 #include <X11/Xlib.h>
 #include <GL/glx.h>
 
+#define MAX_WINDOW_NAME_SIZE 64
+
 #define GLX_CONTEXT_MAJOR_VERSION_ARB       0x2091
 #define GLX_CONTEXT_MINOR_VERSION_ARB       0x2092
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
@@ -41,6 +43,7 @@ class gl_context{
         int default_screen;
         bool running = true;
         bool window_created;
+        char window_name[MAX_WINDOW_NAME_SIZE];
         Atom wm_delete;
         Display* display;
         Window root_window;
@@ -56,6 +59,9 @@ class gl_context{
 
         int create_window(int width, int height, const char* window_name = "window");
         void init(int gl_version_major = 0, int gl_version_minor = 0, const char* wnd_class_name = "window class");
+        void set_window_name(const char* name);
+        void set_temp_window_name(const char* name);
+        void set_vysnc(bool b);
 
         void process_events();
         void swap_buffers();

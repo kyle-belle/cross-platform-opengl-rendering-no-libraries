@@ -1,10 +1,13 @@
 #if defined __linux__ || defined __APPLE__
+#include "../../../GL/glew.h"
 #include "gl_window.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "unistd.h"
 #include "dirent.h"
+#include "../../../utils.h"
 
 int                   fb_attribs[] = {
         GLX_X_RENDERABLE    , True,
@@ -22,6 +25,8 @@ int                   fb_attribs[] = {
       //GLX_SAMPLES         , 4,
       None
      };
+
+PFNGLXSWAPINTERVALSGIPROC glSwapInterval = NULL;
 
 gl_context* gl_context::instance = nullptr;
 
@@ -164,7 +169,8 @@ void gl_context::init(int gl_version_maj, int gl_version_min, const char* wnd_cl
 
 int gl_context::create_window(int width, int height, const char* window_name){
 
-
+    memcpy(this->window_name, window_name, custom_min(strlen(window_name), MAX_WINDOW_NAME_SIZE-1));
+    this->window_name[MAX_WINDOW_NAME_SIZE - 1] = '\0';
 
     printf("CREATING WINDOW!!!\n\n");
     //create window
@@ -176,7 +182,7 @@ int gl_context::create_window(int width, int height, const char* window_name){
     XMapWindow(display, gl_window);
 
     //set name of window
-    XStoreName(display, gl_window, window_name);
+    XStoreName(display, gl_window, this->window_name);
 
     //manually pull opengl function pointer
     glXCreateContextAttribsARBProc glXCreateContextAttribsARB = 0;
@@ -257,8 +263,29 @@ bool gl_context::is_key_pressed(KeySym key){
     return !!(keys[keycode >> 3] & (1 << (keycode & 7)));
 }
 
+void gl_context::set_window_name(const char* name){
+    memcpy(this->window_name, name, custom_min(strlen(name), MAX_WINDOW_NAME_SIZE-1));
+    this->window_name[MAX_WINDOW_NAME_SIZE - 1] = '\0';
+    XStoreName(this->display, this->gl_window, this->window_name);
+}
+
+void gl_context::set_temp_window_name(const char* name){
+    char new_name[MAX_WINDOW_NAME_SIZE] = {0};
+    memcpy(new_name, name, custom_min(strlen(name), MAX_WINDOW_NAME_SIZE-1));
+    new_name[MAX_WINDOW_NAME_SIZE - 1] = '\0';
+    XStoreName(this->display, this->gl_window, new_name);
+}
+
 void gl_context::swap_buffers(){
     glXSwapBuffers(display, gl_window);
+}
+
+void gl_context::set_vysnc(bool b){
+    glSwapInterval = (PFNGLXSWAPINTERVALSGIPROC)glXGetProcAddressARB((unsigned char*)"glXSwapIntervalMESA");
+    if(glSwapInterval){
+        printf("GLX_MESA_swap_control is actually supported\n");
+        glSwapInterval(b);
+    }
 }
 
 void gl_context::add_event_listener(Event_type et, void(*handler)(Event*)){

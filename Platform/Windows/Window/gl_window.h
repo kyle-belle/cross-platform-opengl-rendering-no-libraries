@@ -10,6 +10,8 @@
 #include "../../../Event/key_event.h"
 #include "../../../Event/mouse_event.h"
 
+#define MAX_WINDOW_NAME_SIZE 64
+
 class gl_context{
 
     public:
@@ -20,6 +22,7 @@ class gl_context{
         int gl_version_minor;
         bool running = true;
         bool window_created = false;
+        char window_name[MAX_WINDOW_NAME_SIZE];
         HWND window;
         HDC device_context;
         HGLRC render_context;
@@ -33,8 +36,12 @@ class gl_context{
 
         void init(int gl_version_major = 0, int gl_version_minor = 0, const char* wnd_class_name = "window class");
 
+        void set_window_name(const char* name);
+        void set_temp_window_name(const char* name);
+
         void add_event_listener(Event_type et, void(*)(Event*));
         bool is_key_pressed(int key);
+        void set_vysnc(bool b);
 
         void process_events();
         void swap_buffers();

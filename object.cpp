@@ -102,7 +102,7 @@ object::object(const char* file){
 
                     //printf("face:%s\n", face);
 
-                    r_trim(r_trim(r_trim(face, '\n'), '\r'));
+                    r_trim(r_trim(r_trim(face, '\r'), '\n'));
                     index_length = strlen(face);
 //                    printf("strlen(face): %d\n", index_length);
 //                    printf("face: %s\n", face);

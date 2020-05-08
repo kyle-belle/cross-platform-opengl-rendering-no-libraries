@@ -7,4 +7,9 @@ char* r_trim(char* s, char what = ' ');
 
 char* trim(char* s, char what = ' ');
 
+bool is_extension_supported(const char* extension);
+
+#define custom_min(x, y) ((x) < (y) ? (x) : (y))
+#define custom_max(x, y) ((x) > (y) ? (x) : (y))
+
 #endif // UTILS_INCLUDED

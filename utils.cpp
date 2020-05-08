@@ -1,4 +1,5 @@
 #include <string.h>
+#include "GL/glew.h"
 
 char* l_trim(char* s, char what = ' '){
     while(s){
@@ -17,4 +18,9 @@ char* r_trim(char* s, char what = ' '){
 
 char* trim(char* s, char what = ' '){
     return l_trim(r_trim(s, what), what);
+}
+
+
+bool is_extension_supported(const char* extension){
+    return glewIsExtensionSupported(extension);
 }

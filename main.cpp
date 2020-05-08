@@ -1,6 +1,6 @@
 #include "GL/glew.h"
 #include "Window/gl_window.h"
-#if defined(__APPLE__)
+#if defined __APPLE__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else
@@ -20,6 +20,8 @@
 #include "stb_image.h"
 #include "keyboard.h"
 #include "utils.h"
+#include "TIMER.H"
+#include "utils.h"
 
 //using namespace std;
 float transformation::zNEAR = 0.1f;
@@ -33,6 +35,9 @@ camera transformation::Camera;
 // main (kinda)
 //int WINAPI WinMain(HINSTANCE hinst, HINSTANCE previous_inst, LPSTR args, int command_line){
 
+std::chrono::duration<double, std::milli> TIME::time;
+std::chrono::duration<double, std::milli> TIME::delta;
+std::chrono::duration<double, std::milli> TIME::last_tick;
 
 int main(){
 
@@ -161,15 +166,15 @@ int main(){
     printf("started his obj loader: %ld\n", start);
 
     IndexedModel his_monkey = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_lamborghiniaventador = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
-//    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_lamborghiniaventador = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
+    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
 
     end = clock();
     printf("ended his obj loader: %ld\n", end);
@@ -341,43 +346,73 @@ int main(){
 //        }
 //    });
 
+
+    TIME::time = std::chrono::high_resolution_clock::now().time_since_epoch();
+    if(is_extension_supported("GLX_MESA_swap_control")){
+        printf("GLX_SGI_swap_control is supported\n");
+    }else{
+        printf("GLX_SGI_swap_control is not supported\n");
+        printf("%s\n", glXQueryExtensionsString(context->display, context->default_screen));
+    }
+
+    context->set_vysnc(false);
+
+    float random_counter = 0;
+    int frames = 0;
+    char temp_window_name[MAX_WINDOW_NAME_SIZE];
+    float temp = 0.00f;
+
     while(context->running){
+        TIME::last_tick = TIME::time;
+        TIME::time = std::chrono::high_resolution_clock::now().time_since_epoch();
+        TIME::delta = TIME::time - TIME::last_tick;
+        random_counter += TIME::delta.count();
+        ++frames;
+        if(random_counter >= 1000.0f){
+            snprintf(temp_window_name, MAX_WINDOW_NAME_SIZE-1, "%s - %d FPS", context->window_name, frames);
+            context->set_temp_window_name(temp_window_name);
+            random_counter = 0;
+            frames = 0;
+        }
+//        printf("frame took %fms\n", TIME::delta.count());
+
         context->process_events();
 
         if(context->is_key_pressed(KEY_A)){
-            transformation::Camera.move(transformation::Camera.get_left(), 0.05f);
+            transformation::Camera.move(transformation::Camera.get_left(), 10.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_D)){
-            transformation::Camera.move(transformation::Camera.get_right(), 0.05f);
+            transformation::Camera.move(transformation::Camera.get_right(), 10.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_S)){
-            transformation::Camera.move(transformation::Camera.get_forward(), -0.05f);
+            transformation::Camera.move(transformation::Camera.get_forward(), -10.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_W)){
-            transformation::Camera.move(transformation::Camera.get_forward(), 0.05f);
+            transformation::Camera.move(transformation::Camera.get_forward(), 10.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_ARROW_UP)){
-            transformation::Camera.rotate_x(-1.f);
+            transformation::Camera.rotate_x(-100.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_ARROW_DOWN)){
-            transformation::Camera.rotate_x(1.f);
+            transformation::Camera.rotate_x(100.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_ARROW_LEFT)){
-            transformation::Camera.rotate_y(-1.f);
+            transformation::Camera.rotate_y(-100.0f * (TIME::delta.count()/1000));
         }
 
         if(context->is_key_pressed(KEY_ARROW_RIGHT)){
-            transformation::Camera.rotate_y(1.f);
+            transformation::Camera.rotate_y(100.0f * (TIME::delta.count()/1000));
         }
 
-        transform.set_translation(0, 0, 0);
+        transform.set_translation(2*sin(temp), 0, 2*cos(temp));
         transform.set_rotation(0,90,0);
+        transform.set_scale(0.5f, 0.5f, 0.5f);
         matrix4x4 proj = transform.get_projected_transformation();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -387,8 +422,9 @@ int main(){
         my_monkey.draw(light_object_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
 
-        transform.set_translation(15, 0, 0);
+        transform.set_translation(10, 0, 0);
         transform.set_rotation(0,180,0);
+        transform.set_scale(1.0f, 1.0f, 1.0f);
         transform.get_projected_transformation();
         proj = transform.get_projected_transformation();
         matrix4x4 translation = transform.get_transformation();
@@ -398,10 +434,12 @@ int main(){
         basic_shader.set_uniform_4f("light_color", 1.f, 1.f, 1.f, 1.f);
         basic_shader.set_uniform_4f("object_color", 1.f, 0.5f, 1.f, 1.f);
         basic_shader.set_uniform_matrix4("model", translation);
-        basic_shader.set_uniform_3f("light_pos", 0.f, 0.f, 0.f);
+        basic_shader.set_uniform_3f("light_pos", 2*sin(temp), 0, 2*cos(temp));
+        basic_shader.set_uniform_3f("eye_pos", transform.Camera.position.x, transform.Camera.position.y, transform.Camera.position.z);
         basic_shader.set_uniform_matrix4("u_mvp", proj);
         my_monkey.draw(basic_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
+        temp+=0.01f;
         context->swap_buffers();
     }
 
