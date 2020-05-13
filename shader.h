@@ -2,6 +2,7 @@
 #define SHADER_H_INCLUDED
 
 #include "matrices.h"
+#include "material.h"
 
 class shader{
 
@@ -23,6 +24,8 @@ class shader{
         void set_uniform_2f(const char* name, float v1, float v2);
 
         void set_uniform_matrix4(const char* name, matrix4x4& mat4);
+
+        void set_material(Material& material);
 
         void bind();
 

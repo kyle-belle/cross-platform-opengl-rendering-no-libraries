@@ -76,9 +76,9 @@ class obj_parse_helper{
                         has_uvs = true;
 //                        printf("has uvs\n");
                     }
-//                    if((*(int*)&temp_obj_index.vertex_index) == -1){ // purely debuging purposes
-//                        printf("face_vert: %d\n", atoi(face_vert[index]));
-//                    }
+                    if((*(int*)&temp_obj_index.vertex_index) == -1){ // purely debuging purposes
+                        printf("face_vert: %d\n", atoi(face_vert[index]));
+                    }
                     break;
                 }
             }
@@ -93,6 +93,10 @@ class obj_parse_helper{
 
                         if(face_value[i] == '/'){
                             has_normals = true;
+                            if(i == start_value_index){
+                                value_seperator = 0;
+                                break;
+                            }
 //                            printf("has normals\n");
                         }
 
@@ -102,9 +106,9 @@ class obj_parse_helper{
 
                         temp_obj_index.tex_coord_index = (atoi(face_uv[index]) - 1);
 
-//                        if((*(int*)&temp_obj_index.tex_coord_index) == -1){ // purely debuging purposes
-//                        printf("face_uv: %d\n", atoi(face_uv[index]));
-//                        }
+                      if((*(int*)&temp_obj_index.tex_coord_index) == -1){ // purely debuging purposes
+                        printf("face_uv: %d\n", atoi(face_uv[index]));
+                      }
                         break;
                     }
                 }
@@ -123,9 +127,10 @@ class obj_parse_helper{
                         face_norm[index][value_seperator] = '\0';
 
                         temp_obj_index.normal_index = (atoi(face_norm[index]) - 1);
-//                        if((*(int*)&temp_obj_index.normal_index) == -1){ // purely debuging purposes
-//                            printf("face_norm: %d, %s\n", temp_obj_index.normal_index, face_norm[index]);
-//                        }
+
+                        if((*(int*)&temp_obj_index.normal_index) == -1){ // purely debuging purposes
+                            printf("face_norm: %d, %s\n", temp_obj_index.normal_index, face_norm[index]);
+                        }
                         break;
                     }
                 }
@@ -528,15 +533,15 @@ class obj_parse_helper{
 
 };
 
-class object{
+class Object{
 
     public:
 
+        /* static */ unsigned int VAO;
         bool has_uvs = false;
         bool has_normals = false;
 
         unsigned int buffer_handles[4];
-        /* static */ unsigned int VAO;
         std::vector<vector3f> vertices;
         std::vector<vector3f> normals;
         std::vector<vector2f> tex_coords;
@@ -550,45 +555,46 @@ class object{
 
 
 
-        object() = default;
-        object(const char* file);
-        object(float* vertices, unsigned int vert_size, unsigned int* indices, unsigned int ind_size);
-        object(float* vertices, unsigned int vert_size, float* tex_coords, unsigned int tex_size, unsigned int* indices, unsigned int ind_size);
+        Object() = default;
+        Object(const char* file);
+        Object(float* vertices, unsigned int vert_size, unsigned int* indices, unsigned int ind_size);
+        Object(float* vertices, unsigned int vert_size, float* tex_coords, unsigned int tex_size, unsigned int* indices, unsigned int ind_size);
+        Object(Object& other);
+        Object(Object&&);
 
-        ~object() = default;
+        ~Object() = default;
 
         void create_object();
         void draw(shader& shader);
 
         void buffer_data(const IndexedModel& model){
+            indice_size = model.indices.size();
 
-    indice_size = model.indices.size();
+            glGenVertexArrays(1, &VAO);
+            glBindVertexArray(VAO);
 
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+            glGenBuffers(4, buffer_handles);
 
-    glGenBuffers(4, buffer_handles);
+            glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_VERTEX_BUFFER]);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(model.positions[0]) * model.positions.size(), &model.positions[0], GL_STATIC_DRAW);
+            glEnableVertexAttribArray(OBJECT_VERTEX_BUFFER);
+            glVertexAttribPointer(OBJECT_VERTEX_BUFFER, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_VERTEX_BUFFER]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(model.positions[0]) * model.positions.size(), &model.positions[0], GL_STATIC_DRAW);
-    glEnableVertexAttribArray(OBJECT_VERTEX_BUFFER);
-    glVertexAttribPointer(OBJECT_VERTEX_BUFFER, 3, GL_FLOAT, GL_FALSE, 0, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_TEX_COORD_BUFFER]);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(model.texCoords[0]) * model.texCoords.size(), &model.texCoords[0], GL_STATIC_DRAW);
+            glEnableVertexAttribArray(OBJECT_TEX_COORD_BUFFER);
+            glVertexAttribPointer(OBJECT_TEX_COORD_BUFFER, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_TEX_COORD_BUFFER]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(model.texCoords[0]) * model.texCoords.size(), &model.texCoords[0], GL_STATIC_DRAW);
-    glEnableVertexAttribArray(OBJECT_TEX_COORD_BUFFER);
-    glVertexAttribPointer(OBJECT_TEX_COORD_BUFFER, 2, GL_FLOAT, GL_FALSE, 0, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_NORMAL_BUFFER]);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(model.normals[0]) * model.normals.size(), &model.normals[0], GL_STATIC_DRAW);
+            glEnableVertexAttribArray(OBJECT_NORMAL_BUFFER);
+            glVertexAttribPointer(OBJECT_NORMAL_BUFFER, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_NORMAL_BUFFER]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(model.normals[0]) * model.normals.size(), &model.normals[0], GL_STATIC_DRAW);
-    glEnableVertexAttribArray(OBJECT_NORMAL_BUFFER);
-    glVertexAttribPointer(OBJECT_NORMAL_BUFFER, 3, GL_FLOAT, GL_FALSE, 0, 0);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_handles[OBJECT_INDEX_BUFFER]);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(model.indices[0]) * model.indices.size(), &model.indices[0], GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_handles[OBJECT_INDEX_BUFFER]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(model.indices[0]) * model.indices.size(), &model.indices[0], GL_STATIC_DRAW);
-
-    glBindVertexArray(0);
-}
+            glBindVertexArray(0);
+        }
 };
 
 #endif // OBJECT_H_INCLUDED

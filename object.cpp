@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <algorithm>
 #include "utils.h"
-//unsigned int object::VAO;
+//unsigned int Object::VAO;
 
-object::object(const char* file){
+Object::Object(const char* file){
     FILE* obj_file;
     obj_parse_helper face_parser;
     unsigned int i=0;//, start, end, seperator; // , j,k;
@@ -366,7 +366,7 @@ object::object(const char* file){
                 break;
 
                 default:
-                    fgets(face, 62, obj_file);
+                    fgets(face, 127, obj_file);
 //                    printf("fgets(face, 25, obj_file): %s\n", fgets(face, 62, obj_file));
 
                 }
@@ -413,7 +413,7 @@ object::object(const char* file){
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(this->indices[0]) * this->indices.size(), &this->indices[0], GL_STATIC_DRAW);
     }
 
-object::object(float* vertices, unsigned int vert_size, unsigned int* indices, unsigned int ind_size){
+Object::Object(float* vertices, unsigned int vert_size, unsigned int* indices, unsigned int ind_size){
 //        printf("sizeof(indices) %d\n", ind_size);
 
         this->vertices.reserve((vert_size/4)/3);
@@ -451,7 +451,7 @@ object::object(float* vertices, unsigned int vert_size, unsigned int* indices, u
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(this->indices[0]) * this->indices.size(), &this->indices[0], GL_STATIC_DRAW);
 }
 
-object::object(float* vertices, unsigned int vert_size, float* tex_coords, unsigned int tex_size, unsigned int* indices, unsigned int ind_size){
+Object::Object(float* vertices, unsigned int vert_size, float* tex_coords, unsigned int tex_size, unsigned int* indices, unsigned int ind_size){
         printf("sizeof(indices) %d\n", ind_size);
         this->vertices.reserve((vert_size/4)/3);
 
@@ -500,7 +500,41 @@ object::object(float* vertices, unsigned int vert_size, float* tex_coords, unsig
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(this->indices[0]) * this->indices.size(), &this->indices[0], GL_STATIC_DRAW);
 }
 
-void object::create_object(){
+Object::Object(Object& other): has_uvs(other.has_uvs), has_normals(other.has_normals), vertices(other.vertices), normals(other.normals), tex_coords(other.tex_coords), indices(other.indices), indice_size(other.indice_size){
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    glGenBuffers(4, buffer_handles);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_VERTEX_BUFFER]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0]) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(OBJECT_VERTEX_BUFFER);
+    glVertexAttribPointer(OBJECT_VERTEX_BUFFER, 3, GL_FLOAT, false, 0, 0);
+
+
+    if(this->has_normals){
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_NORMAL_BUFFER]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(normals[0]) * normals.size(), &normals[0], GL_STATIC_DRAW);
+        glEnableVertexAttribArray(OBJECT_NORMAL_BUFFER);
+        glVertexAttribPointer(OBJECT_NORMAL_BUFFER, 3, GL_FLOAT, false, 0, 0);
+    }
+
+    if(this->has_uvs){
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_handles[OBJECT_TEX_COORD_BUFFER]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords[0]) * tex_coords.size(), &tex_coords[0], GL_STATIC_DRAW);
+        glEnableVertexAttribArray(OBJECT_TEX_COORD_BUFFER);
+        glVertexAttribPointer(OBJECT_TEX_COORD_BUFFER, 2, GL_FLOAT, false, 0, 0);
+    }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_handles[OBJECT_INDEX_BUFFER]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(this->indices[0]) * this->indices.size(), &this->indices[0], GL_STATIC_DRAW);
+}
+
+Object::Object(Object&& other): VAO(other.VAO), has_uvs(other.has_uvs), has_normals(other.has_normals), vertices(std::move(other.vertices)), normals(std::move(other.normals)), tex_coords(std::move(other.tex_coords)), indices(std::move(other.indices)), indice_size(other.indice_size){
+    memcpy(this->buffer_handles, other.buffer_handles, 4);
+}
+
+void Object::create_object(){
 
 //    obj_index current_index;
 //    unsigned int current = 0;
@@ -547,7 +581,7 @@ void object::create_object(){
     }
 }
 
-void object::draw(shader& shader){
+void Object::draw(shader& shader){
 
     shader.bind();
     glBindVertexArray(VAO);

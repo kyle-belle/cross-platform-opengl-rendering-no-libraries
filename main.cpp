@@ -22,6 +22,7 @@
 #include "utils.h"
 #include "TIMER.H"
 #include "utils.h"
+#include "game_object.h"
 
 //using namespace std;
 float transformation::zNEAR = 0.1f;
@@ -135,7 +136,7 @@ int main(){
 //    unsigned int IBO;
 //    unsigned int TBO;
 
-//    object cube(vertices, sizeof(vertices), tex_coords, sizeof(tex_coords), indices, sizeof(indices));
+//    Object cube(vertices, sizeof(vertices), tex_coords, sizeof(tex_coords), indices, sizeof(indices));
 
 //    Sleep(2000);
 
@@ -146,16 +147,17 @@ int main(){
     start = clock();
     printf("started my obj loader: %ld\n", start);
 
-    object my_monkey("Chevy.obj");
-    object my_monkey2("Chevy.obj");
-    object my_lamborghiniaventador("Chevy.obj");
-    object my_monkey4("Chevy.obj");
-    object my_monkey5("Chevy.obj");
-    object my_monkey6("Chevy.obj");
-    object my_monkey7("Chevy.obj");
-    object my_monkey8("Chevy.obj");
-    object my_monkey9("Chevy.obj");
-    object my_monkey10("Chevy.obj");
+
+    Game_object game_object(Object("Handgun.obj"), vector4f(1.f, 1.f, 1.f, 1.f));
+//    Object my_monkey2("Handgun.obj");
+//    Object my_lamborghiniaventador("Handgun.obj");
+//    Object my_monkey4("Handgun.obj");
+//    Object my_monkey5("Handgun.obj");
+//    Object my_monkey6("Handgun.obj");
+//    Object my_monkey7("Handgun.obj");
+//    Object my_monkey8("Handgun.obj");
+//    Object my_monkey9("Handgun.obj");
+//    Object my_monkey10("Handgun.obj");
 
     end = clock();
     printf("ended my obj loader: %ld\n", end);
@@ -165,16 +167,16 @@ int main(){
     start = clock();
     printf("started his obj loader: %ld\n", start);
 
-    IndexedModel his_monkey = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey2 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_lamborghiniaventador = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey4 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey5 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey6 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey7 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey8 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey9 = OBJModel("Chevy.obj").ToIndexedModel();
-    IndexedModel his_monkey10 = OBJModel("Chevy.obj").ToIndexedModel();
+//    IndexedModel his_monkey = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey2 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_lamborghiniaventador = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey4 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey5 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey6 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey7 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey8 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey9 = OBJModel("Handgun.obj").ToIndexedModel();
+//    IndexedModel his_monkey10 = OBJModel("Handgun.obj").ToIndexedModel();
 
     end = clock();
     printf("ended his obj loader: %ld\n", end);
@@ -185,39 +187,39 @@ int main(){
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //    glEnable(GL_BLEND);
 
-    if(my_monkey.indices.size() != his_monkey.indices.size()){
-        printf("different size indices: mine(%lu), his(%lu)\n", my_monkey.indices.size(), his_monkey.indices.size());
-    }
-    if(my_monkey.vertices.size() != his_monkey.positions.size()){
-        printf("different size vertices: mine(%lu), his(%lu)\n", my_monkey.vertices.size(), his_monkey.positions.size());
-    }
-    if(my_monkey.tex_coords.size() != his_monkey.texCoords.size()){
-        printf("different size tex_coords: mine(%lu), his(%lu)\n", my_monkey.tex_coords.size(), his_monkey.texCoords.size());
-    }
-    if(my_monkey.normals.size() != his_monkey.normals.size()){
-        printf("different size normals: mine(%lu), his(%lu)\n", my_monkey.normals.size(), his_monkey.normals.size());
-    }
+//    if(my_monkey.indices.size() != his_monkey.indices.size()){
+//        printf("different size indices: mine(%lu), his(%lu)\n", my_monkey.indices.size(), his_monkey.indices.size());
+//    }
+//    if(my_monkey.vertices.size() != his_monkey.positions.size()){
+//        printf("different size vertices: mine(%lu), his(%lu)\n", my_monkey.vertices.size(), his_monkey.positions.size());
+//    }
+//    if(my_monkey.tex_coords.size() != his_monkey.texCoords.size()){
+//        printf("different size tex_coords: mine(%lu), his(%lu)\n", my_monkey.tex_coords.size(), his_monkey.texCoords.size());
+//    }
+//    if(my_monkey.normals.size() != his_monkey.normals.size()){
+//        printf("different size normals: mine(%lu), his(%lu)\n", my_monkey.normals.size(), his_monkey.normals.size());
+//    }
 
-    // creating and binding a vertex array object
+    // creating and binding a vertex array Object
 //    glGenVertexArrays(1, &VAO);
 //    glBindVertexArray(VAO);
 //
 //    //unsigned int VBO;
-//    // creating and binding a vertex buffer object(VBO)
+//    // creating and binding a vertex buffer Object(VBO)
 //    glGenBuffers(1, &VBO);
 //    glBindBuffer(GL_ARRAY_BUFFER, VBO);
 //    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 //
-//    // specifying the attributes(details) of the vertex buffer object(VBO) we just binded (must be bound) also enabling it
+//    // specifying the attributes(details) of the vertex buffer Object(VBO) we just binded (must be bound) also enabling it
 //    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3*sizeof(float), (void*)0);
 //    glEnableVertexAttribArray(0);
 //
-//    // creating and binding a index buffer object(IBO)
+//    // creating and binding a index buffer Object(IBO)
 //    glGenBuffers(1, &IBO);
 //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 //    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 //
-//    //generating texture-coordinates buffer object(TBO)
+//    //generating texture-coordinates buffer Object(TBO)
 //    glGenBuffers(1, &TBO);
 //    glBindBuffer(GL_ARRAY_BUFFER, TBO);
 //    glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords), tex_coords, GL_STATIC_DRAW);
@@ -227,8 +229,8 @@ int main(){
 
     /// setting texture attributes
 
-    // creating a texture object (texture)
-    texture texture1("sun2.jpg", 0);
+    // creating a texture Object (texture)
+    texture texture1("handgun_C.jpg", 0);
     texture1.bind();
 //    unsigned int texture;
 //    glGenTextures(1, &texture);
@@ -362,6 +364,8 @@ int main(){
     char temp_window_name[MAX_WINDOW_NAME_SIZE];
     float temp = 0.00f;
 
+    basic_shader.set_uniform_f("ambient_light", 0.3f);
+
     while(context->running){
         TIME::last_tick = TIME::time;
         TIME::time = std::chrono::high_resolution_clock::now().time_since_epoch();
@@ -419,10 +423,10 @@ int main(){
 
         light_object_shader.use();
         light_object_shader.set_uniform_matrix4("u_mvp", proj);
-        my_monkey.draw(light_object_shader);
+        game_object.render(&light_object_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
 
-        transform.set_translation(10, 0, 0);
+        transform.set_translation(0, 0, 0);
         transform.set_rotation(0,180,0);
         transform.set_scale(1.0f, 1.0f, 1.0f);
         transform.get_projected_transformation();
@@ -437,7 +441,7 @@ int main(){
         basic_shader.set_uniform_3f("light_pos", 2*sin(temp), 0, 2*cos(temp));
         basic_shader.set_uniform_3f("eye_pos", transform.Camera.position.x, transform.Camera.position.y, transform.Camera.position.z);
         basic_shader.set_uniform_matrix4("u_mvp", proj);
-        my_monkey.draw(basic_shader);
+        game_object.render(&basic_shader);
 //        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, 0);
         temp+=0.01f;
         context->swap_buffers();

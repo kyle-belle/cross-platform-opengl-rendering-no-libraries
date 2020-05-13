@@ -4,6 +4,8 @@
 #include "shader.h"
 #include "GL/glew.h"
 
+#define MATERIAL_UNIFORM_NAME "material"
+
     shader::shader(const char* vertex_shader, const char* fragment_shader){
         int compile;
 
@@ -83,6 +85,12 @@
 
     void shader::set_uniform_matrix4(const char* name, matrix4x4& mat4){
         glUniformMatrix4fv(glGetUniformLocation(id, name), 1, false, &mat4.m[0][0]);
+    }
+
+    void shader::set_material(Material& material){
+        glUniform4f(glGetUniformLocation(id, "material.color"), material.colour.r, material.colour.g, material.colour.b, material.colour.a);
+        glUniform1f(glGetUniformLocation(id, "material.specular"), material.specular);
+        glUniform1f(glGetUniformLocation(id, "material.shininess"), material.shininess);
     }
 
     void shader::bind(){
