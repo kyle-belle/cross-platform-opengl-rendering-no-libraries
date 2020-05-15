@@ -149,15 +149,15 @@ int main(){
 
 
     Game_object game_object(Object("Handgun.obj"), vector4f(1.f, 1.f, 1.f, 1.f));
-//    Object my_monkey2("Handgun.obj");
-//    Object my_lamborghiniaventador("Handgun.obj");
-//    Object my_monkey4("Handgun.obj");
-//    Object my_monkey5("Handgun.obj");
-//    Object my_monkey6("Handgun.obj");
-//    Object my_monkey7("Handgun.obj");
-//    Object my_monkey8("Handgun.obj");
-//    Object my_monkey9("Handgun.obj");
-//    Object my_monkey10("Handgun.obj");
+    Object my_monkey2("Handgun.obj");
+    Object my_lamborghiniaventador("Handgun.obj");
+    Object my_monkey4("Handgun.obj");
+    Object my_monkey5("Handgun.obj");
+    Object my_monkey6("Handgun.obj");
+    Object my_monkey7("Handgun.obj");
+    Object my_monkey8("Handgun.obj");
+    Object my_monkey9("Handgun.obj");
+    Object my_monkey10("Handgun.obj");
 
     end = clock();
     printf("ended my obj loader: %ld\n", end);
@@ -167,16 +167,16 @@ int main(){
     start = clock();
     printf("started his obj loader: %ld\n", start);
 
-//    IndexedModel his_monkey = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey2 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_lamborghiniaventador = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey4 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey5 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey6 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey7 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey8 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey9 = OBJModel("Handgun.obj").ToIndexedModel();
-//    IndexedModel his_monkey10 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey2 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_lamborghiniaventador = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey4 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey5 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey6 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey7 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey8 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey9 = OBJModel("Handgun.obj").ToIndexedModel();
+    IndexedModel his_monkey10 = OBJModel("Handgun.obj").ToIndexedModel();
 
     end = clock();
     printf("ended his obj loader: %ld\n", end);
