@@ -373,7 +373,7 @@ int main(){
         random_counter += TIME::delta.count();
         ++frames;
         if(random_counter >= 1000.0f){
-            snprintf(temp_window_name, MAX_WINDOW_NAME_SIZE-1, "%s - %d FPS", context->window_name, frames);
+            snprintf(temp_window_name, MAX_WINDOW_NAME_SIZE-1, "%s - %f FPS", context->window_name, frames/(random_counter/1000));
             context->set_temp_window_name(temp_window_name);
             random_counter = 0;
             frames = 0;
