@@ -9,6 +9,7 @@
 * Create native windowing implementation for MacOS <br />
 * Clean code by removing comments of old code (probably should do this soon) <br />
 * Rename all classes so they begin with capital leters <br />
+* At some point i will want to organize files in well named folders (Basically better file/project structure) <br />
 
 note: <br />
     There is a Mac branch which attempts to use XQuartz and X11 but it is way behind as XQuartz only supports opengl 2.1 and GLSL #120.<br/>
