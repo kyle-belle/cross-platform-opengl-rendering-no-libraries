@@ -7,6 +7,8 @@ char* r_trim(char* s, char what = ' ');
 
 char* trim(char* s, char what = ' ');
 
+char* get_file_extension(const char* file);
+
 bool is_extension_supported(const char* extension);
 
 #define custom_min(x, y) ((x) < (y) ? (x) : (y))

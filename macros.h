@@ -2,5 +2,6 @@
 #define MACROS_H_INCLUDED
 
 #define PURE_VIRTUAL =0
+#define STR_MATCH 0
 
 #endif // MACROS_H_INCLUDED

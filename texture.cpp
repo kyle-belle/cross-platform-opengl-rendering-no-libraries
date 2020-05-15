@@ -3,7 +3,7 @@
 #include "GL/glew.h"
 
    texture::texture(const char* path, int n_slot)
-       : texture_id(0),  file_path(path), image(nullptr), height(0), width(0), bpp(0), slot(n_slot){
+       : texture_id(0),  file_path(path), image(nullptr), width(0), height(0), bpp(0), slot(n_slot){
 
            stbi_set_flip_vertically_on_load(1);
 

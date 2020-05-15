@@ -223,7 +223,7 @@ void gl_context::process_events(){
                     k = XStringToKeysym(buf);
                 }
                 Key_press_event e(k, false);
-                printf("Key Press %c : %d\n", buf[0], k);
+                printf("Key Press %c : %lu\n", buf[0], k);
                 std::vector<void(*)(Event*)> key_press_handlers = *event_handlers[Event_type::key_press];
                 for(auto handler: key_press_handlers){
                     if(handler){

@@ -414,7 +414,7 @@ int main(){
             transformation::Camera.rotate_y(100.0f * (TIME::delta.count()/1000));
         }
 
-        transform.set_translation(2*sin(temp), 0, 2*cos(temp));
+        transform.set_translation(2*sin(TIME::time.count()/1000), 2, 2*cos(TIME::time.count()/1000));
         transform.set_rotation(0,90,0);
         transform.set_scale(0.5f, 0.5f, 0.5f);
         matrix4x4 proj = transform.get_projected_transformation();
@@ -438,7 +438,7 @@ int main(){
         basic_shader.set_uniform_4f("light_color", 1.f, 1.f, 1.f, 1.f);
         basic_shader.set_uniform_4f("object_color", 1.f, 0.5f, 1.f, 1.f);
         basic_shader.set_uniform_matrix4("model", translation);
-        basic_shader.set_uniform_3f("light_pos", 2*sin(temp), 0, 2*cos(temp));
+        basic_shader.set_uniform_3f("light_pos", 2*sin(TIME::time.count()/1000), 2, 2*cos(TIME::time.count()/1000));
         basic_shader.set_uniform_3f("eye_pos", transform.Camera.position.x, transform.Camera.position.y, transform.Camera.position.z);
         basic_shader.set_uniform_matrix4("u_mvp", proj);
         game_object.render(&basic_shader);
