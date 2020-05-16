@@ -178,29 +178,7 @@ Object::Object(Object&& other): VAO(other.VAO), has_uvs(other.has_uvs), has_norm
 
 void Object::create_object(std::vector<vector3f>& model_vertices, std::vector<vector2f>& model_tex_coords, std::vector<vector3f>& model_normals, std::vector<Model_index>& model_indices){
 
-//    obj_index current_index;
-//    unsigned int current = 0;
     for(unsigned int i = 0; i < model_indices.size(); i++){
-//        current_index = model_indices[i];
-
-//        printf("obj vert: %f\n ", this->model_vertices[this->model_indices[i].vertex_index].x);
-//        printf("index %d\n", this->model_indices[i].vertex_index);
-//        printf("before vert %u, vert_size:%d, obj_indices_size:%d\n", this->model_indices[i].vertex_index, this->model_vertices.size(), this->model_indices.size());
-
-//        if(std::find(this->model_indices.begin(), this->model_indices.end(), this->model_indices[i]) == this->model_indices.end()){
-
-//        int previous_index = -1;
-//        for (unsigned int j = 0; j < i; j++){
-//            if (model_indices[i] == model_indices[j]){
-//                printf("i = %u/%u/%u, j = %u/%u/%u\n", i - j, j, model_indices[i].normal_index, model_indices[j].vertex_index, model_indices[j].tex_coord_index, model_indices[j].normal_index);
-//                previous_index = j;
-//                break;
-//            }
-//        }
-//
-//        if(previous_index > -1){
-//            indices.push_back(indices[previous_index]);
-//        }else{
 
             this->vertices.emplace_back(model_vertices[model_indices[i].vertex_index]);
 
@@ -215,10 +193,6 @@ void Object::create_object(std::vector<vector3f>& model_vertices, std::vector<ve
             }
 
             this->indices.push_back(i);
-
-//            current++;
-//        }
-//        }
 
     }
     this->object_loaded = true;

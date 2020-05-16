@@ -23,6 +23,7 @@
 #include "TIMER.H"
 #include "utils.h"
 #include "game_object.h"
+#include "XML_parser.h"
 
 //using namespace std;
 float transformation::zNEAR = 0.1f;
@@ -181,7 +182,9 @@ int main(){
     end = clock();
     printf("ended his obj loader: %ld\n", end);
 
+
     printf("total time to complete 10 of his obj loader: %.2fsec\n", (double)(end - start)/CLOCKS_PER_SEC);
+    XML_parser("Handgun_dae.dae");
 
 //    my_monkey.buffer_data(his_monkey);
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

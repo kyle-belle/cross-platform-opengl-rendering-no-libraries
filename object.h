@@ -18,21 +18,6 @@
 #define FLOAT GL_FLOAT
 #define UNSIGNED_INT GL_UNSIGNED_INT
 
-class obj_index{
-
-    public:
-
-        unsigned int vertex_index;
-        unsigned int tex_coord_index;
-        unsigned int normal_index;
-
-        bool operator ==(const obj_index& other){
-//            printf("%p --- %p\n", this, &other);
-            return ((other.vertex_index == this->vertex_index) && (other.tex_coord_index == this->tex_coord_index) && (other.normal_index == this->normal_index) && (this != &other));
-        }
-
-};
-
 class Object{
 
     public:

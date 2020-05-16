@@ -264,7 +264,6 @@ OBJ_loader::OBJ_loader(const char* file, Object* object): Model_loader(file){
     object->has_normals = this->has_normals;
 
     object->create_object(this->model_vertices, this->model_tex_coords, this->model_normals, this->model_indices);
-    //TODO: Load obj data into buffers
 }
 
 int OBJ_loader::load(const char* file) {
