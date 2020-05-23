@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "resource_loader.h"
 #include "obj_load.h"
+#include "collada_loader.h"
 #include "macros.h"
 //unsigned int Object::VAO;
 
@@ -18,6 +19,8 @@ Object::Object(const char* file){
     if(extension){
         if(strcasecmp(OBJ_FILE_EXTENTION, extension) == STR_MATCH){
             OBJ_loader(file, this);
+        }else if(strcasecmp(COLLADA_FILE_EXTENSION, extension) == STR_MATCH){
+            Collada_loader(file, this);
         }else{
             printf("Unsupported file type .%s\n", extension);
         }

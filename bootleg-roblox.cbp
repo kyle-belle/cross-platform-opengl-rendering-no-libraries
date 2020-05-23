@@ -52,7 +52,13 @@
 		<Unit filename="Platform/Windows/keyboard.h" />
 		<Unit filename="TIMER.H" />
 		<Unit filename="Window/gl_window.h" />
+		<Unit filename="XML_node.cpp" />
+		<Unit filename="XML_node.h" />
+		<Unit filename="XML_parser.cpp" />
+		<Unit filename="XML_parser.h" />
 		<Unit filename="camera.h" />
+		<Unit filename="collada_loader.cpp" />
+		<Unit filename="collada_loader.h" />
 		<Unit filename="game_object.cpp" />
 		<Unit filename="game_object.h" />
 		<Unit filename="keyboard.h" />

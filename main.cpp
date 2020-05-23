@@ -159,6 +159,11 @@ int main(){
     Object my_monkey8("Handgun.obj");
     Object my_monkey9("Handgun.obj");
     Object my_monkey10("Handgun.obj");
+    Object collada_test("Handgun_dae.dae");
+
+    XML_parser xml("Handgun_dae.dae");
+    xml.parent->print_tree();
+
 
     end = clock();
     printf("ended my obj loader: %ld\n", end);
@@ -184,7 +189,7 @@ int main(){
 
 
     printf("total time to complete 10 of his obj loader: %.2fsec\n", (double)(end - start)/CLOCKS_PER_SEC);
-    XML_parser("Handgun_dae.dae");
+//    XML_parser("Handgun_dae.dae");
 
 //    my_monkey.buffer_data(his_monkey);
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

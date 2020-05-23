@@ -7,10 +7,18 @@
 class XML_node {
     public:
 
-        const char* tag_name = NULL;
-        const char* data = NULL;
-        std::unordered_map<char*, char*> attribute_values;
-        std::unordered_map<char*, std::list<XML_node>> children;
+        char* tag_name = NULL;
+        char* data = NULL;
+        int depth;
+        bool is_self_closing = false;
+        std::unordered_map<char*, char*> attributes;
+        std::unordered_map<char*, std::list<XML_node*>*> children;
+
+        XML_node(){}
+        ~XML_node();
+
+        void print_tree();
+        void delete_node();
 };
 
 #endif // XML_NODE_H_INCLUDED
