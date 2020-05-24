@@ -162,6 +162,7 @@ int main(){
     Object collada_test("Handgun_dae.dae");
 
     XML_parser xml("Handgun_dae.dae");
+//    printf("parent: %s\n", xml.parent->data);
     xml.parent->print_tree();
 
 

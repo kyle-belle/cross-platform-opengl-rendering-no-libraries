@@ -19,13 +19,18 @@ void XML_node::delete_node(){
     }
 }
 
+void XML_node::print_data_without_nested_tags(){
+
+}
+
 void XML_node::print_tree(){
     printf("%.*s<%s", this->depth*2, "---------------------------------------------------------------------------------------------",this->tag_name);
     for(auto it : this->attributes){
         printf(" %s=\"%s\"", it.first, it.second);
     }
     printf(">\n");
-    printf("%*c%s\n", this->depth, ' ', this->data?this->data:"");
+
+//    printf("%*c%s\n", this->depth, ' ', this->data?this->data:"");
 
     if(this->is_self_closing){
         printf("/>");
