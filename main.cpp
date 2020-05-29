@@ -148,6 +148,12 @@ int main(){
     start = clock();
     printf("started my obj loader: %ld\n", start);
 
+    unsigned int split_count = 0;
+    char** split_test = split("This is a split test", &split_count);
+    printf("split count: %d\n", split_count);
+    for(unsigned int i = 0; i < split_count; ++i){
+        printf("#%d split: %s\n", i, split_test[i]);
+    }
 
     Game_object game_object(Object("Handgun.obj"), vector4f(1.f, 1.f, 1.f, 1.f));
     Object my_monkey2("Handgun.obj");
@@ -163,7 +169,9 @@ int main(){
 
     XML_parser xml("Handgun_dae.dae");
 //    printf("parent: %s\n", xml.parent->data);
-    xml.parent->print_tree();
+    XML_node* positions = xml.parent->getElementById("Cube_001-mesh-positions-array");
+    printf("Cube_001-mesh-positions-array float_array: %s\n", positions?positions->data:"null");
+//    xml.parent->print_tree();
 
 
     end = clock();

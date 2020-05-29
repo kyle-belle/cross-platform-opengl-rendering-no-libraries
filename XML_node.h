@@ -4,6 +4,9 @@
 #include <list>
 #include <unordered_map>
 #include <map>
+#include <vector>
+#include <string>
+#include "utils.h"
 
 // order on children nodes will not be maintained.
 // as you can see i'm literally using an unordered_map.
@@ -17,13 +20,22 @@ class XML_node {
         char* data = NULL;
         int depth;
         bool is_self_closing = false;
-        std::unordered_map<char*, char*> attributes;
-        std::unordered_map<char*, std::list<XML_node*>*> children;
+        std::unordered_map<std::string, const char*> attributes;
+        std::unordered_map<std::string, std::list<XML_node*>*> children;
 
         XML_node(){}
         ~XML_node();
 
         void print_tree();
+
+        /**
+         * @param id
+         *
+         * Get the first node which has an id attribute whose value is equal to @param id
+        */
+        XML_node* getElementById(const char* id);
+        std::vector<XML_node*> querySelector(const char* selector);
+        std::vector<XML_node*> getElementsByTagName(const char* tag);
         void delete_node();
         void print_data_without_nested_tags(); // not implemented
 };

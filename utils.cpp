@@ -34,6 +34,41 @@ char* get_file_extension(const char* file){
     return extension;
 }
 
+/* std::vector<char*> */char** split(const char* s, unsigned int* count, char splitter = ' '){
+    unsigned int s_length = strlen(s);
+    char** segments = NULL;
+    unsigned int segment_count = 1;
+    unsigned int i = 0;
+    for(; i < s_length; ++i){//first go over string to get amount of segments
+        if(s[i] == splitter){
+            ++segment_count;
+            continue;
+        }
+    }
+
+    *count = segment_count; // maybe should just use vector so i don't have to maintain this size count
+    if(segment_count){
+        segments = new char*[segment_count];
+    }
+
+    unsigned int segment_start = 0;
+    unsigned int segment_end = 0;
+    unsigned int segment_length = 0;
+    for(i=0; i < segment_count; ++i){
+        while(s[segment_end] != splitter && s[segment_end] != '\0'){
+            ++segment_end;
+        }
+
+        segment_length = segment_end - segment_start;
+        segments[i] = new char[segment_length + 1];
+        memcpy(segments[i], &s[segment_start], segment_length);
+        segments[i][segment_length] = '\0';// we must set this explicity
+        segment_start = ++segment_end;
+    }
+
+    return segments;
+}
+
 bool is_extension_supported(const char* extension){
     return glewIsExtensionSupported(extension);
 }
